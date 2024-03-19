@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            display: block;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            margin-top: 50px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            background-color: #c6dbff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 20px #005effe0;
+            width: 300px;
+            margin-top: 30px;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+
+        h1 {
+            margin-top: 50px;
+            color: #000000;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+
+        input,select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #4582eb;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4582eb;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #30588e;
+        }
+
+        input::placeholder {
+            color: black;
+            font-weight: 500;
+        }
+        button,input,select,label,h1,h2,.in,.container{
+  opacity: 0;
+    
+  animation-name: cd-fade-in-up;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes cd-fade-in-up {
+  0%{
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+    </style>
+</head>
+<body>
+
+    <h1>Quiz App</h1>
+    <div class="container">
+    <form action="/new" method="post">
+        <label for="subjectSelect">Select a Subject For Quiz:</label>
+        <select id="subjectSelect" name="subjectSelect" required>
+            <option value="maths">Maths</option>
+            <option value="os">Operatign Systems</option>
+            <option value="adld">ADLD and CO</option>
+            <option value="dsa">DSA</option>
+            <option value="bt">Bio-Technology</option>
+        </select>
+
+        
+        <button type="submit">Take Quiz</button>
+    </form>
+    <form action="/show" method="post">
+        <label for="subjectSelect">See score:</label>
+        <select id="subjectSelect" name="subjectSelect" required>
+            <option value="maths">Maths</option>
+            <option value="os">Operatign Systems</option>
+            <option value="adld">ADLD and CO</option>
+            <option value="dsa">DSA</option>
+            <option value="bt">Bio-Technology</option>
+        </select>
+
+        
+        <button type="submit">Show score</button>
+    </form>
+</div>
+</body>
+</html>

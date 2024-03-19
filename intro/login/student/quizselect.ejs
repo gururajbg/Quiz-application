@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select A Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d3e3ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #4d84e2;
+            text-align: center;
+            font-size: 2em;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #d3e3ff;
+            z-index: 1000;
+            padding: 10px 0;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .quiz-option, .back-button, .submit-button {
+            margin: 10px;
+            width: 600px;
+            padding: 10px;
+            border: 1px solid #4d84e2;
+            cursor: pointer;
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .quiz-option:hover, .back-button:hover, .submit-button:hover {
+            background-color: #3366cc;
+        }
+
+        .quiz-options-container {
+            margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .questions-container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            border: 1px solid #4d84e2;
+            border-radius: 5px;
+            padding: 15px;
+            background-color: white;
+        }
+
+        .question p {
+            font-size: 1.2em;
+            color: #4d84e2;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            font-size: 1em;
+        }
+
+        .results-container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .result {
+            border: 1px solid #4d84e2;
+            border-radius: 5px;
+            padding: 15px;
+            background-color: white;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-options-container">
+        <% if (subjects && subjects.length > 0) { %>
+            <% for (let i = 0; i < subjects.length; i++) { %>
+                <div class="quiz-option" onclick="handleQuizSelection('<%= subjects[i] %>')">
+                    <%= subjects[i] %>
+                </div>
+            <% } %>
+        <% } else { %>
+            <h1>Select The Quiz</h1>
+        <% } %>
+        
+    </div>
+
+    <script>
+       
+       
+       function decodeHtmlEntities(encodedString) {
+    var textArea = document.createElement('textarea');
+    textArea.innerHTML = encodedString;
+    return textArea.value;
+}
+
+// Example usage:
+let questionsString = '<%= questions %>';
+let decodedQuestionsString = decodeHtmlEntities(questionsString);
+let questions = JSON.parse(decodedQuestionsString);
+
+let subjectsj= '<%= JSON.stringify(subjects) %>';
+let decodedSubjectString = decodeHtmlEntities(subjectsj);
+let subjects = JSON.parse(decodedSubjectString);
+
+
+console.log( questions);
+
+
+        window.onscroll = function () {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+    var header = document.querySelector("h1");
+    if (header) {
+        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            header.style.fontSize = "1.5em";
+        } else {
+            header.style.fontSize = "2em";
+        }
+    }}
+    function parseDateTimeString(dateTimeString) {
+    if (!dateTimeString) {
+        return null; // Return null for undefined or null dateTimeString
+    }
+
+    // Parse the date string in "YYYY-MM-DDThh:mm" format
+    var [datePart, timePart] = dateTimeString.split("T");
+    var [year, month, day] = datePart.split("-");
+    var [hours, minutes] = timePart.split(":");
+    
+    // Months are zero-indexed in JavaScript, so subtract 1
+    return new Date(year, month - 1, day, hours, minutes);
+}
+
+
+function handleQuizSelection(subject) {
+            var currentTime = new Date();
+            var selectedQuestions = questions.filter(question => question.subject === subject);
+            var isQuizTime = selectedQuestions.some(question => {
+                // Parse start and end times as Date objects
+                var startTime = parseDateTimeString(question.startTime);
+                var endTime = parseDateTimeString(question.endTime);
+
+                if (!startTime || !endTime) {
+                    return false; // Skip invalid date strings
+                }
+
+                // Check if the current time is within the quiz duration
+                return currentTime >= startTime && currentTime <= endTime;
+            });
+
+            if (1) {
+                var groupedQuestions = selectedQuestions.map(question => ({
+                    question: question.question,
+                    options: [question.optiona, question.optionb, question.optionc, question.optiond],
+                    correctAnswer: question.correctanswer
+                }));
+
+                hideQuizOptions();
+                displayQuestions(groupedQuestions);
+                createBackButton();
+            } else {
+                alert("Quiz is not available at the moment.");
+            }
+        }
+
+
+
+        function hideQuizOptions() {
+            var quizOptionsContainer = document.querySelector(".quiz-options-container");
+            if (quizOptionsContainer) {
+                quizOptionsContainer.style.display = "none";
+            }
+        }
+
+        function createBackButton() {
+            var backButton = document.createElement("button");
+            backButton.textContent = "Back";
+            backButton.className = "back-button";
+
+            backButton.onclick = function () {
+                showQuizOptions();
+                removeQuestionsContainer();
+                removeButton(backButton);
+            };
+
+            document.body.appendChild(backButton);
+        }
+
+        function showQuizOptions() {
+            var quizOptionsContainer = document.querySelector(".quiz-options-container");
+            if (quizOptionsContainer) {
+                quizOptionsContainer.style.display = "flex";
+                quizOptionsContainer.style.flexDirection = 'column';
+            }
+        }
+
+        function removeQuestionsContainer() {
+            var questionsContainer = document.querySelector(".questions-container");
+            if (questionsContainer) {
+                questionsContainer.remove();
+            }
+        }
+
+        function removeButton(button) {
+            if (button) {
+                document.body.removeChild(button);
+            }
+        }
+
+        function createSubmitButton(questions) {
+            var submitButton = document.createElement("button");
+            submitButton.textContent = "Submit";
+            submitButton.className = "submit-button";
+
+            submitButton.onclick = function () {
+                handleQuizSubmission(questions);
+            };
+
+            document.body.appendChild(submitButton);
+        }
+
+        function displayQuestions(questions) {
+            var questionsContainer = document.createElement("div");
+            questionsContainer.className = "questions-container";
+
+            questions.forEach((question, index) => {
+                var questionDiv = document.createElement("div");
+                questionDiv.className = "question";
+                questionDiv.innerHTML = `<p>${index + 1}. ${question.question}</p>`;
+
+                var optionsList = document.createElement("ul");
+
+                question.options.forEach((option, optionIndex) => {
+                    var optionItem = document.createElement("li");
+                    var inputId = `option_${index}_${optionIndex}`;
+                    optionItem.innerHTML = `<input type="radio" id="${inputId}" name="answer_${index}" value="${option}"> 
+                                           <label for="${inputId}">${option}</label>`;
+                    optionsList.appendChild(optionItem);
+                });
+
+                questionDiv.appendChild(optionsList);
+                questionsContainer.appendChild(questionDiv);
+            });
+
+            var submitButton = document.createElement("button");
+            submitButton.textContent = "Submit";
+            submitButton.className = "submit-button";
+
+            submitButton.onclick = function () {
+                handleQuizSubmission(questions);
+            };
+
+            questionsContainer.appendChild(submitButton);
+            document.body.appendChild(questionsContainer);
+        }
+        function handleQuizSubmission(questions) {
+    var userAnswers = [];
+
+    questions.forEach((currentQuestion, index) => {
+        var selectedOption = document.querySelector(`input[name="answer_${index}"]:checked`);
+
+        if (selectedOption) {
+            var selectedValue = selectedOption.value;
+            var correctAnswerIndex = currentQuestion.correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0);
+            var correctAnswer = currentQuestion.options[correctAnswerIndex];
+
+            userAnswers.push({
+                question: currentQuestion.question,
+                userAnswer: selectedValue,
+                correctAnswer: correctAnswer
+            });
+        } else {
+            alert(`Please select an answer for question ${index + 1}`);
+            return;
+        }
+    });
+
+    displayResults(userAnswers);
+}
+function displayResults(userAnswers) {
+    var totalQuestions = userAnswers.length;
+    var correctAnswers = 0;
+
+    userAnswers.forEach((answer, index) => {
+        var resultText = `${index + 1}. ${answer.question}\nYour Answer: ${answer.userAnswer}\nCorrect Answer: ${answer.correctAnswer}`;
+
+        // Check if the user's answer is correct
+        if (answer.userAnswer === answer.correctAnswer) {
+            correctAnswers++;
+        }
+    });
+
+    var scoreText = `Your Score: ${correctAnswers} / ${totalQuestions}`;
+    alert(scoreText);
+
+    setTimeout(function () {
+        window.location.reload(); 
+    }, 10); 
+}
+
+
+        if (subjects && subjects.length > 0) {
+            subjects.forEach(subject => {
+                var quizOption = document.createElement("div");
+                quizOption.className = "quiz-option";
+                quizOption.textContent = subject;
+                quizOption.onclick = function () {
+                    handleQuizSelection(subject);
+                };
+
+                document.querySelector(".quiz-options-container").appendChild(quizOption);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!-- displayquiz.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Quiz</title>
+<style>
+    body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      h1 {
+        color: #333333;
+        text-align: center;
+        margin-top: 20px;
+      }
+      
+      ul {
+        list-style-type: none;
+        width: 100%;
+        margin-top: 20px;
+      }
+      
+      li {
+        width: 90%;
+        padding: 15px;
+        background-color: #f5f5f5;
+        border-radius: 8px;
+        box-shadow: 0px 0px 15px rgba(12, 12, 12, 0.247);
+        margin-bottom: 20px;
+      }
+      
+      button {
+        justify-self: center;
+        align-self: center;
+        background-color: #559eff;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+      }
+      
+      button:hover {
+        background-color: #003ba0;
+      }
+      
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        font-weight: bold;
+        color: #333333;
+      }
+      
+      input[type="text"] {
+      display: none;
+      }
+      
+      input[type="submit"] {
+        background-color: #8fbfff;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+      }
+      
+      input[type="submit"]:hover {
+        background-color: #6e9ae6;
+      }
+      
+      p {
+        /* text-align: center; */
+        color: #333333;
+        /* margin-top: 20px; */
+        /* margin-left: 40px; */
+      }
+      
+      .name {
+        font-weight: 500;
+        
+      }
+      
+      #timer {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+    </style>
+</head>
+<body>
+    <h1>Quiz Questions</h1>
+
+    <% if (questions.length > 0) { %>
+        <form method="post" action="/submitquiz" id="quizForm">
+            <input type="text" value="<%= quizId %>" name="quizName">
+            <ul>
+                <% 
+                    function shuffleArray(array) {
+                        for (let i = array.length - 1; i > 0; i--) {
+                            const j = Math.floor(Math.random() * (i + 1));
+                            [array[i], array[j]] = [array[j], array[i]];
+                        }
+                        return array;
+                    }
+                    
+                    const shuffledQuestions = shuffleArray([...questions]).slice(0, 10);
+
+                    shuffledQuestions.forEach((question, index) => { 
+                        const shuffledOptions = shuffleArray([question.optiona, question.optionb, question.optionc, question.optiond]);
+                %>
+                    <li>
+                        <p><strong>Question <%= index + 1 %>:</strong> <%= question.question %></p>
+                        <label>
+                            <input type="radio" name="answer_<%= index %>" value="<%= shuffledOptions[0] %>">
+                            <%= shuffledOptions[0] %>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="answer_<%= index %>" value="<%= shuffledOptions[1] %>">
+                            <%= shuffledOptions[1] %>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="answer_<%= index %>" value="<%= shuffledOptions[2] %>">
+                            <%= shuffledOptions[2] %>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="answer_<%= index %>" value="<%= shuffledOptions[3] %>">
+                            <%= shuffledOptions[3] %>
+                        </label>
+                       
+                    </li>
+                <% }); %>
+            </ul>
+            <div id="timer"></div>
+
+            <button type="submit">Submit Quiz</button>
+        </form>
+        <script>
+    // Set timer for 20 minutes
+    const timerDisplay = document.getElementById('timer');
+    let timeLeft = 20 * 60; // 20 minutes in seconds
+
+    // Update timer display every second
+    const timerInterval = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+
+        // Format minutes and seconds with leading zeros if needed
+        const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+        // Update timer display
+        timerDisplay.textContent = formattedTime;
+
+        // Decrement timeLeft
+        timeLeft--;
+
+        // If time runs out, submit the quiz automatically
+        if (timeLeft < 0) {
+            clearInterval(timerInterval); // Stop the timer
+            document.getElementById('quizForm').submit(); // Submit the form
+        }
+    }, 1000); // Update every second (1000 milliseconds)
+
+    // Prevent page refresh without submitting the quiz
+    window.addEventListener('beforeunload', function(event) {
+        // Check if the timer is still running
+        if (timeLeft > 0) {
+            // Cancel the event
+            event.preventDefault();
+            // Chrome requires a return value
+            event.returnValue = '';
+        }
+    });
+</script>
+
+
+    <% } else { %>
+        <p>No questions available for this quiz.</p>
+    <% } %>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!-- showresults.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results for <%= quizName %></title>
+    <style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+li:hover {
+    background-color: #f9f9f9;
+}
+
+p {
+    text-align: center;
+    color: #777;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Quiz Results for <%= quizName %></h1>
+
+    <% if (quizResults.length > 0) { %>
+        <ul>
+            <% quizResults.forEach(result => { %>
+                <li>
+                    Student: <%= result.student_name %> | Score: <%= result.score %>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No results available for this quiz.</p>
+    <% } %>
+</body>
+</html>

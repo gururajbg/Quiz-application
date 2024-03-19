@@ -1,0 +1,97 @@
+
+
+
+ body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    opacity: 0;
+    text-align: center;
+    animation-name: cd-fade-in-up;
+    animation-duration: 1s;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+#logo {
+    opacity: 0;
+    animation-name: cd-fade-in-up;
+    animation-duration: 1s;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+#rvimage {
+    border-radius: 50%;
+}
+
+h1 {
+    opacity: 0;
+    animation-name: cd-fade-in-up;
+    animation-duration: 1s;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation-name: cd-fade-in-up;
+    animation-duration: 1s;
+    animation-delay: 1.2s;
+    animation-fill-mode: forwards;
+}
+
+.container {
+    background-color: #c6dbff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #30588e;
+    margin: 20px;
+}
+
+.btn {
+    background-color: #4582eb;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px;
+    opacity: 0;
+    
+    animation-name: cd-fade-in-up;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    width: 124px;
+}
+
+.btn:hover {
+    background-color: #30588e;
+}
+
+
+
+
+@keyframes cd-fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sections</title>
+    <link rel="stylesheet" href="sections.css">
+</head>
+
+<body>
+
+
+
+    <div class="professor-info">
+        <img src="images-1.png" alt="sorry">
+        <h2>Professor Information</h2>
+        <p>Name: <%= professor.name %>
+        </p>
+        <p>Email: <%= professor.email %>
+        </p>
+        <!-- Add more dynamic information using EJS syntax -->
+    </div>
+
+
+
+    <div class="container">
+        
+        <div class="all">
+        <div class="quizzes">
+            <form action="/ava" method="get"><button id="ava" type="submit">Your Quizzes</button></form>
+        </div>
+        <div class="add">
+            <h3>Add quiz</h3>
+            <div class="row1">
+                <form action="/csa" method="post">
+                    <button class="sec" id="csa" type="submit">CSE-A</button>
+                </form>
+                <form action="/csb" method="post">
+                    <button class="sec" id="csb" type="submit">CSE-B</button>
+                </form>
+            </div>
+            <div class="row2">
+                <form action="/csc" method="post">
+                    <button class="sec" id="csc" type="submit">CSE-C</button>
+                </form>
+                <form action="/csd" method="post">
+                    <button class="sec" id="csd" type="submit">CSE-D</button>
+                </form>
+            </div>
+        </div></div>
+    </div>
+</body>
+<script src="sections.js"></script>
+
+</html>

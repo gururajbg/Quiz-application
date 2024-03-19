@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add quiz</title>
+    <link rel="stylesheet" href="addquiza.css">
+</head>
+
+<body>
+    
+    <div class="container">
+    <form id="add-question-form" method="post" action="/topic">
+        <input type="text" id="quizName" name="quizName" placeholder="QUIZ NAME" required>
+
+<div class="time-container">
+        <div style="display: flex"><label id="startl" for="start">Start Time</label>
+            <input type="datetime-local" id="start" name="start" placeholder="START TIME" required>
+        </div>
+        <div style="display: flex"><label id="endl" for="end">End Time &#160</label>
+            <input type="datetime-local" id="end" name="end" placeholder="END TIME" required>
+        </div>
+        </div>
+        
+
+
+        <div class="question">
+            <div id="add-question-container">
+                
+
+                <label for="question">Enter the question:</label><br>
+                <textarea id="question" name="question" rows="4" cols="50" required></textarea><br>
+                <label for="optionA">Option A:</label><br>
+                <input type="text" id="optionA" name="optionA" required value=""><br>
+                <label for="optionB">Option B:</label><br>
+                <input type="text" id="optionB" name="optionB" required value=""><br>
+                <label for="optionC">Option C:</label><br>
+                <input type="text" id="optionC" name="optionC" required value=""><br>
+                <label for="optionD">Option D:</label><br>
+                <input type="text" id="optionD" name="optionD" required value=""><br>
+                <label for="correctOption">Select the correct option:</label><br>
+                <select id="correctOption" name="correctOption" required>
+                    <option value="a">A</option>
+                    <option value="b">B</option>
+                    <option value="c">C</option>
+                    <option value="d">D</option>
+                </select><br>
+                <button id="add-question-button" type="submit">Add Question</button>
+    </form>
+    </div>
+
+</div>
+</body>
+<script src="addquiza.js"></script>
+
+
+</html>

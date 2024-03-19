@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Questions</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            display: grid;
+
+            justify-content: center;
+        }
+
+        fieldset {
+            background-color: #ccdfff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            margin: 20px;
+            text-align: center;
+            text-align: left;
+            border: none;
+            box-shadow: 0px 0px 10px #67a4f3;
+
+        }
+
+        h1,
+        h2 {
+            justify-content: center;
+            display: flex;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        button {
+            margin-left: 180px;
+            margin-bottom: 10px;
+            width: max-content;
+            background-color: #fff;
+            color: #0004ff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0px 0px 10px #005effe0;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #8fbfff;
+            transform: scale(1.1);
+        }
+
+
+
+        text {
+            display: grid;
+            text-align: left;
+            font-weight: bold;
+            color: #555;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 48px;
+
+        }
+
+        li {
+            padding-top: 11px;
+            margin-bottom: 10px;
+
+            background-color: #edf4ff;
+            border-radius: 10px;
+            padding-left: 30px;
+            box-shadow: 0px 0px 10px #8fbfff;
+        }
+
+
+
+        label {
+            display: inline-flex;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+
+
+        input::placeholder {
+            color: #555;
+            font-weight: 500;
+        }
+
+        .bold {
+
+
+            font-weight: bold;
+            color: black;
+        }
+
+        button,
+        input,
+        select,
+        label,
+        h1,
+        h2,
+        .in,
+        .container,
+        li,
+        ul,
+        legend,
+        fieldset {
+            opacity: 0;
+
+            animation-name: cd-fade-in-up;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+        }
+     
+
+        @keyframes cd-fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Quiz Questions</h1>
+
+    <form action="/submit" method="post">
+        <% if (questionlist && questionlist.length> 0) { %>
+            <% questionlist.forEach((question, index)=> { %>
+                <fieldset>
+                    <text>
+                        Qn.<%=index+1 %>:
+                            <br>
+                            <div class="bold">
+                                <%= question.question %>
+                            </div>
+                    </text>
+                    <ul>
+                        <li><label><input type="radio" name="answer<%= index %>" value="<%= question.optiona %>">
+                                <%= question.optiona %>
+                            </label></li>
+                        <li><label><input type="radio" name="answer<%= index %>" value="<%= question.optionb %>">
+                                <%= question.optionb %>
+                            </label></li>
+                        <li><label><input type="radio" name="answer<%= index %>" value="<%= question.optionc %>">
+                                <%= question.optionc %>
+                            </label></li>
+                        <li><label><input type="radio" name="answer<%= index %>" value="<%= question.optiond %>">
+                                <%= question.optiond %>
+                            </label></li>
+                    </ul>
+                </fieldset>
+                <% }); %>
+                    <button type="submit">Submit</button>
+                    <% } else { %>
+                        <p>No questions available.</p>
+                        <% } %>
+    </form>
+
+</body>
+
+</html>

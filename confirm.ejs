@@ -1,0 +1,100 @@
+<!-- confirm.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Confirmation</title>
+    <style>    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background-color: #c0d6fd;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   
+        text-align: center;
+        box-shadow: 0px 0px 15px #4582eb;
+        margin-top: -250px;
+    }
+
+    h1 {
+        color: #4b4949;
+        font-size: 28px;
+      text-align: center;
+    }
+
+    form {
+        padding: 50px;
+        background-color: #b0cbfa;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 8px;
+        box-shadow:0px 0px 20px #4582eb;
+    }
+
+    label {
+        color: #333;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 16px;
+    }
+
+    button {
+        background-color: #4582eb;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+    .a{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    }
+    a{
+        background-color: #ffffff;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    button:hover {
+        background-color: #30588e;
+    }
+    </style>
+    <!-- Add your styles if needed -->
+</head>
+<body>
+    <h1>Download Confirmation</h1>
+    <div class="container">
+    <p>Do you want to download the Excel file or view it on the website?</p>
+    <div class="a">
+    <a href="/download-excel" class="btn-download">Download Excel</a>
+    <a href="/view-on-website" class="btn-view">View on Website</a>
+</div>
+</div>
+
+</body>
+</html>

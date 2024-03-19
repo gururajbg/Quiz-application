@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            display: block;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            margin: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            opacity: 0;
+            animation-name: cd-fade-in-up;
+            animation-duration: 2s;
+            animation-delay: 0.8s;
+            animation-fill-mode: forwards;
+            background-color: #c6dbff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 20px #005effe0;
+            width: 300px;
+            margin-top: 30px;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+
+        h2,
+        h1 {
+            opacity: 0;
+            animation-name: cd-fade-in-up;
+            animation-duration: 2s;
+            animation-delay: 0.8s;
+            animation-fill-mode: forwards;
+            color: #000000;
+        }
+
+        label {
+            opacity: 0;
+            animation-name: cd-fade-in-up;
+            animation-duration: 2s;
+            animation-delay: 0.8s;
+            animation-fill-mode: forwards;
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            opacity: 0;
+            animation-name: cd-fade-in-up;
+            animation-duration: 2s;
+            animation-delay: 0.8s;
+            animation-fill-mode: forwards;
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #4582eb;
+            border-radius: 5px;
+        }
+
+        button {
+            opacity: 0;
+            animation-name: cd-fade-in-up;
+            animation-duration: 2s;
+            animation-delay: 0.8s;
+            animation-fill-mode: forwards;
+            background-color: #4582eb;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+
+            background-color: #30588e;
+        }
+
+        input::placeholder {
+            color: black;
+            font-weight: 500;
+        }
+
+        @keyframes cd-fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Welcome to the Admin Dashboard</h1>
+    <div class="container">
+        <form action="/add-teacher" method="POST">
+            <h2>Add Teacher</h2>
+            <label for="teacherName">Name:</label>
+            <input type="text" id="teacherName" name="teacherName" required placeholder="Enter Name">
+            <br>
+            <label for="teacherSubject">Subject:</label>
+            <input type="text" id="teacherSubject" name="teacherSubject" required placeholder="Enter Subject">
+            <br>
+            <label for="teacherEmail">Email:</label>
+            <input type="email" id="teacherEmail" name="teacherEmail" required placeholder="Enter Email">
+            <br>
+            <label for="teacherPassword">Password:</label>
+            <input type="password" id="teacherPassword" name="teacherPassword" required placeholder="Enter Password">
+            <br>
+            <button type="submit">Add Teacher</button>
+        </form>
+
+
+        <form action="/add-student" method="POST">
+            <h2>Add Student</h2>
+            <label for="studentName">Name:</label>
+            <input type="text" id="studentName" name="studentName" required placeholder="Enter Name">
+            <br>
+            <label for="studentGrade">Section:</label>
+            <input type="text" id="studentGrade" name="studentGrade" required placeholder="Enter Section">
+            <br>
+            <label for="studentEmail">Email:</label>
+            <input type="email" id="studentEmail" name="studentEmail" required placeholder="Enter Email">
+            <br>
+            <label for="studentPassword">Password:</label>
+            <input type="password" id="studentPassword" name="studentPassword" required placeholder="Enter Password">
+            <br>
+            <button type="submit">Add Student</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

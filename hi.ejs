@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    
+
+
+ body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container ,form{
+   
+    text-align: center;
+    display: block;
+    animation-name: cd-fade-in-up;
+    animation-duration: 1s;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+.container > form:nth-child(2) > label:nth-child(1) {
+  display: block;
+  margin: 10px;
+  margin-top: 70px;
+}
+
+
+#logo {
+    opacity: 0;
+    animation-name: cd-fade-in-up;
+    animation-duration: 1s;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+#rvimage {
+    border-radius: 50%;
+}
+
+h1 {
+    opacity: 0;
+    animation-name: cd-fade-in-up;
+    animation-duration: 1s;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation-name: cd-fade-in-up;
+    animation-duration: 1s;
+    animation-delay: 1.2s;
+    animation-fill-mode: forwards;
+}
+
+.container {
+    background-color: #c6dbff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #30588e;
+    margin: 20px;
+}
+
+.btn ,a{
+    background-color: #4582eb;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px;
+    opacity: 0;
+    
+    animation-name: cd-fade-in-up;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    width: 124px;
+}
+
+.btn:hover {
+    background-color: #30588e;
+}
+
+label.label input[type="file"] {
+  position: absolute;
+  width: 1000px;
+  height: 100px;
+  cursor: pointer;
+
+  opacity: 0.000001;
+
+}
+.label {
+    width: 200px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #4582eb;
+  cursor: pointer;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin: 5px;
+  background: #dddddd;
+  display: inline-block;
+}
+.label:hover {
+  background: #4582eb;
+}
+.label:active {
+  background: #9fa1a0;
+}
+.label:invalid+span {
+  color: #000000;
+}
+.label:valid+span {
+  color: #ffffff;
+}
+
+
+@keyframes cd-fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+</style>
+<body>
+    <div class="container">
+
+        <form method="post" action="/download-template">
+            <button type="submit" class="label">Download Template</button>
+        </form>
+        
+
+
+    <form action="/saveqizz" method="post" enctype="multipart/form-data">
+        <label class="label" for="file">
+        <input  type="file" name="file"  accept=".xlsx, .xls">
+        <span>Import</span>
+        
+    </label>
+        <button class="btn" type="submit">Submit</button>
+    </form>
+</div>
+    
+</body>
+</html>

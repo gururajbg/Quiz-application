@@ -1,0 +1,303 @@
+<!-- C:/Users/Asus/Desktop/newmath/viewquiz.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Quiz</title>
+    <style>
+        /* availablequizzes.css */
+
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333333;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        li,.contain {
+            width: 90%;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(12, 12, 12, 0.247);
+            margin-bottom: 20px;
+        }
+
+        
+
+        button {
+            background-color: #559eff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #003ba0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            margin-top: 5px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        input[type="text"] {
+            width: 98%;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #8fbfff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #6e9ae6;
+        }
+        .question{
+            font-size: 18px;
+            color: #000000;
+            margin: 5px;
+            font-weight: 500;
+        }
+        p {
+            text-align: center;
+            color: #333333;
+            margin-top: 40px;
+        }
+
+        .name {
+            font-weight: 500;
+        }
+        .contain{
+            padding: 30px;
+        }
+        .option{
+            margin: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Quiz Details</h1>
+
+    <% if (quizDetails.length> 0) { %>
+
+        <ul>
+            <% quizDetails.forEach(detail=> { %>
+                <div class="contain">
+                    <div class="question">
+                        &#xa0;&#xa0;<%= detail.question %>
+                    </div>
+
+                    <div class="option" id="oa">
+                        a.&#xa0;<%= detail.optiona %>
+                    </div>
+                    <div class="option" id="ob">
+                        b.&#xa0;<%= detail.optionb %>
+                    </div>
+                    <div class="option" id="oc">
+                        c.&#xa0;<%= detail.optionc %>
+                    </div>
+                    <div class="option" id="od">
+                        d.&#xa0;<%= detail.optiond %>
+                    </div>
+                    <div class="option" id="od">
+                       <%= detail.correctanswer %>
+                    </div>
+
+                    <!-- Add Edit and Delete buttons -->
+                    <div>
+                        <button onclick="editQuestion('<%= detail.question %>')">Edit</button>
+                        <button onclick="deleteQuestion('<%= detail.question %>')">Delete</button>
+                    </div>
+                </div>
+                <br>
+
+                <!-- Edit Form -->
+                <div id="editFormContainer" style="display: none;">
+                    <form id="editForm" onsubmit="submitEditForm('<%= detail.question %>'); return false;">
+                        <label for="editQuestion">Edit Question:</label>
+                        <input type="text" id="editQuestion" name="editQuestion" required >
+
+                        <label for="editOptionA">Edit Option A:</label>
+                        <input type="text" id="editOptionA" name="editOptionA" required >
+
+                        <label for="editOptionB">Edit Option B:</label>
+                        <input type="text" id="editOptionB" name="editOptionB" required >
+
+                        <label for="editOptionC">Edit Option C:</label>
+                        <input type="text" id="editOptionC" name="editOptionC" required >
+
+                        <label for="editOptionD">Edit Option D:</label>
+                        <input type="text" id="editOptionD" name="editOptionD" required >
+
+                        <label for="editCorrectOption">Edit Correct Option:</label>
+                        <input type="text" id="editCorrectOption" name="editCorrectOption" required >
+
+                        <button type="submit">Submit Edit</button>
+                    </form>
+                </div>
+                <% }); %>
+        </ul>
+        <% } else { %>
+            <p>No details available for this quiz.</p>
+            <% } %>
+
+                <script>
+function editQuestion(questionId, question) {
+    // Show the edit form for the selected question
+    document.getElementById('editFormContainer').style.display = 'block';
+    const questionContainers = document.querySelectorAll('.contain');
+    questionContainers.forEach(container => {
+        container.style.display = 'none';
+    });
+
+    // Fetch the existing data for the selected question using AJAX/Fetch
+    fetch('/fetchquiz/' + encodeURIComponent(questionId))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch quiz details. Response status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(quizDetailsData => {
+            // Prefill the form with existing data if available
+            if (quizDetailsData && quizDetailsData.question) {
+                document.getElementById('editQuestion').value = quizDetailsData.question;
+            }
+            if (quizDetailsData && quizDetailsData.optiona) {
+                document.getElementById('editOptionA').value = quizDetailsData.optiona;
+            }
+            if (quizDetailsData && quizDetailsData.optionb) {
+                document.getElementById('editOptionB').value = quizDetailsData.optionb;
+            }
+            if (quizDetailsData && quizDetailsData.optionc) {
+                document.getElementById('editOptionC').value = quizDetailsData.optionc;
+            }
+            if (quizDetailsData && quizDetailsData.optiond) {
+                document.getElementById('editOptionD').value = quizDetailsData.optiond;
+            }
+            if (quizDetailsData && quizDetailsData.correctanswer) {
+                document.getElementById('editCorrectOption').value = quizDetailsData.correctanswer;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching quiz details:', error);
+            // Handle the error, e.g., display a user-friendly message to the user
+        });
+}
+
+function submitEditForm(question) {
+    const formData = {
+        question: document.getElementById('editQuestion').value,
+        optiona: document.getElementById('editOptionA').value,
+        optionb: document.getElementById('editOptionB').value,
+        optionc: document.getElementById('editOptionC').value,
+        optiond: document.getElementById('editOptionD').value,
+        correctOption: document.getElementById('editCorrectOption').value
+    };
+
+    // Send the form data to the server using Fetch or XMLHttpRequest
+    fetch('/updatequiz/' + encodeURIComponent(question), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Server response:', data);
+            // You can update the UI or handle the response accordingly
+            location.reload(); // Reload inside the fetch block to ensure it happens after the operation completes
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
+                    function deleteQuestion(question) {
+    const confirmDeletion = confirm('Are you sure you want to delete this question?');
+    
+    if (confirmDeletion) {
+        fetch('/deletequestion/' + encodeURIComponent(question), {
+            method: 'POST',
+            // Remove 'headers' if the server response is not in JSON format
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            console.log('Server response:', response);
+            return response.json();
+        })
+        .then(data => {
+            console.log('Server data:', data);
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+}
+
+
+                </script>
+</body>
+
+</html>

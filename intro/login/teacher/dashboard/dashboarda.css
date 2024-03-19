@@ -1,0 +1,94 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  border-color: #000000;
+}
+
+.container {
+
+ 
+  text-align: center;
+  display: grid;
+
+  border-radius: 18px;
+  background-color: #c6dbff;
+  padding: 30px;
+
+  box-shadow: 1px 1px 20px #005effe0;
+ 
+
+ 
+}
+.in{
+  display: flex;
+}
+
+
+h1,h2 {
+  color: #000000;
+}
+
+label {
+  display: block;
+  margin: 15px 0 5px;
+  font-weight: bold;
+}
+
+input,select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #4582eb;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #fff;
+  color: #0004ff;
+  padding: 12px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 240px;
+  margin: 23px;
+  height: 104px;
+  box-shadow: 0px 0px 10px #005effe0;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #8fbfff;
+  transform: scale(1.1);
+}
+
+input::placeholder {
+  color: black;
+  font-weight: 500;
+}
+
+button,input,select,label,h1,h2,.in,.container{
+  opacity: 0;
+    
+  animation-name: cd-fade-in-up;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes cd-fade-in-up {
+  0%{
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
